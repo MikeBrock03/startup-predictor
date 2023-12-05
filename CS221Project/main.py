@@ -10,6 +10,12 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
 
+# Fill milestone cols with a billion
+# Normalize appropriate cols
+# Keep cols that are bools
+# Change dates to time since certain date
+# Drop cols that are all null
+
 def read(file):
     dataset = pd.read_csv(file)
     dtColumns = ['founded_at', 'closed_at', 'first_funding_at', 'last_funding_at']
@@ -32,13 +38,13 @@ def read(file):
     columns_to_keep = columns_to_normalize + booleanColumns
     preprocessed_df = filtered_dataset[columns_to_keep]
 
-    #NEED TO RESOLVE ISSUE W NANS (age first/last milestone year, closed at)
-    #preprocessed_df = preprocessed_df.dropna(axis=1)
-
     milestoneColumns = ['age_first_milestone_year','age_last_milestone_year']
     preprocessed_df[milestoneColumns] = preprocessed_df[milestoneColumns].fillna(1000000000000)
 
     return preprocessed_df
+
+# splits dataset maintaining general distributions
+# train into train, other and another time to split other into validation, test
 
 def splitDataset(df):
     X = df.drop('labels', axis=1)
@@ -48,6 +54,14 @@ def splitDataset(df):
     X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
 
     return X_train, y_train, X_val, y_val, X_test, y_test
+
+# this is all scikit learn
+# train model using .fit function
+# predict using .predict function
+# extract the weights from the fully trained model for printing and interpreting to see what the model is doing
+# evaluate using accuracy_score, precision_score, recall_score, classification_report
+# we did not do hyperparam tuning for the baseline; it does not have any hyperparams
+# we tested it twice (once on validation and once on test) to see how it would perform on unseen data
 
 def logReg(X_train, y_train, X_val, y_val, X_test, y_test):
     model = LogisticRegression(random_state=42)
@@ -72,6 +86,9 @@ def logReg(X_train, y_train, X_val, y_val, X_test, y_test):
     test_accuracy = accuracy_score(y_test, y_test_pred)
     print(f'Test Accuracy: {test_accuracy * 100:.2f}%')
 
+# split data into tesnsors so pytorch can use it
+# create data loaders for each dataset type (train, validation, test)
+
 def prepare_data_NN(X_train, y_train, X_val, y_val, X_test, y_test, batch_size):
     X_train_tensor = torch.tensor(X_train.values).float()
     y_train_tensor = torch.tensor(y_train.values).float()
@@ -93,6 +110,11 @@ def prepare_data_NN(X_train, y_train, X_val, y_val, X_test, y_test, batch_size):
     test_loader = DataLoader(test_dataset, batch_size=batch_size)
 
     return train_loader, val_loader, test_loader
+
+# accepts training and validation data, list of learning rates, list of batch sizes, list of lists, with each list being a hidden layer configuration, and input size
+# for the hidden layer configuration lists, each element is the number of nodes in that layer (first then second then third later etc)
+# loop thorugh all possible combinaitons of hyperparams and train a model for each, evaluating on validation set
+# compare validation accuracy and return the hyperparams that gave the best validation accuracy
 
 def hyperparameter_tuning(train_loader, val_loader, learning_rates, batch_sizes, hidden_layer_configs, input_size):
     best_val_accuracy = 0
@@ -121,6 +143,9 @@ def hyperparameter_tuning(train_loader, val_loader, learning_rates, batch_sizes,
 
     return best_hyperparams
 
+# use pytorch to set up the model
+# appending the right number of nodes for each layer
+
 class BinaryClassifier(nn.Module):
     def __init__(self, input_size, hidden_layers, output_size=1):
         super(BinaryClassifier, self).__init__()
@@ -141,8 +166,18 @@ class BinaryClassifier(nn.Module):
 
         self.layers = nn.Sequential(*layers)
 
+    # forward pass is just passing the data through the layers
+    # no need to define backward pass because pytorch does it for us
+
     def forward(self, x):
         return self.layers(x)
+
+# train the model using trainig data
+# evaluate on validation set
+# return the average test loss and the accuracy, precision, and recall on the test set
+# when we call this in the triple nested loop in the hyperparameter tuning function, we get some metrics on how the model is doing on unseen data with that configuration
+# once we pick the best hyperparams, we train the model again on the training and validation data, and print the validation loss
+# the point of this is to evaluate the model on unseen data as we do gradient decent
 
 def trainNN(model, train_loader, val_loader, criterion, optimizer, num_epochs=10):
     for epoch in range(num_epochs):
@@ -165,6 +200,11 @@ def trainNN(model, train_loader, val_loader, criterion, optimizer, num_epochs=10
                 total_val_loss += val_loss.item()
 
         print(f'Epoch {epoch+1}, Validation Loss: {total_val_loss / len(val_loader)}')
+
+# evalNN evaluates on the test set
+# this gives us the final metrics for the model
+# in the hyperparameter tuning function, we call it on the validation data set to test to see how well it does on unseen data for each hyperparam configuration
+# once we pick the best hyperparameters, we use the eval function to evaluate the model on the test set
 
 def evalNN(model, test_loader, criterion):
     model.eval()
@@ -197,6 +237,16 @@ def evalNN(model, test_loader, criterion):
 
     return average_test_loss, accuracy, precision, recall
 
+# we load the data, preprocess it, and split it into train, validation, and test
+# we call logReg on the data to get a baseline
+# we convert the data into tensors and create data loaders for each dataset type for pytorch to read
+# we then do hyperparameter tuning on the data to find the best hyperparams
+# we train the model on the training and validation data using the best hyperparams
+
+# we chose the numbers for configs from playing around with different numbers and seeing what worked best
+# the conclusion was that with more layers the model did not preform much better if at all better
+# for the less complex hidden layer configs, the higher learning rates worked better, and for the more complex ones, the lower learning rates worked better
+
 def main():
     p = os.path.join(os.path.dirname(__file__), "startup_data.csv")
     preprocessed_df = read(p)
@@ -209,10 +259,9 @@ def main():
 
     input_size = X_train.shape[1]
     # customize num hidden layers and nodes in them here!!
-    hidden_layers = [5, 4, 4]
     learning_rates = [0.1, 0.01, 0.001, 0.0001, .00001]
-    batch_sizes = [16, 32, 64, 128]
-    hidden_layer_configs = [[5], [5, 4], [64, 32], [5, 4, 4]]
+    batch_sizes = [16, 32]
+    hidden_layer_configs = [[5], [64], [5, 4], [64, 32], [5, 4, 3], [64, 32, 16]]
     best_lr, best_batch_size, best_hidden_layers = hyperparameter_tuning(train_loader, val_loader, learning_rates, batch_sizes, hidden_layer_configs, input_size)
     print('best lr,', best_lr, 'best batch', best_batch_size, 'best hidden', best_hidden_layers)
 
