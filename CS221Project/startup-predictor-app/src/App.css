@@ -1,0 +1,253 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: royalblue;
+  min-height: 5vh; /* Reduced from 100vh to 20vh */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Changed from center to flex-start */
+  font-size: calc(10px + 2vmin);
+  color: peachpuff;
+  padding-top: 20px; /* Add some padding at the top */
+}
+
+.App-header h1 {
+  margin: 0;
+  font-size: calc(12px + 2vmin); /* Adjust font size as needed */
+  font-weight: bold;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  height: 100vh; /* Set the height to the full viewport height */
+  background-color: royalblue;
+  padding: 20px;
+  color: peachpuff;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* This will make it expand to fill available space */
+}
+
+.carousel-form-item {
+  min-height: 80vh; /* Adjust as needed */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  margin: 10px;
+}
+
+.start-button {
+  background-color: peachpuff;
+  color: royalblue;
+  border: none;
+  padding: 20px 40px; /* Increase padding for a larger button */
+  font-size: 20px; /* Larger font size */
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+
+.carousel-form-item div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px; /* Space between each radio button group */
+}
+
+.radio-buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px; /* Space between radio groups */
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column; /* Arrange items vertically */
+  align-items: center;
+  margin-right: 10px; /* Space between each radio button group */
+}
+
+.radio-group input[type="radio"] {
+  accent-color: peachpuff; /* Change the radio button color */
+}
+
+.radio-group input[type="radio"]:hover {
+  outline: 2px solid peachpuff; /* Outline on hover */
+}
+
+.radio-group input[type="radio"]:focus {
+  outline: 2px solid peachpuff; /* Outline on focus for accessibility */
+}
+
+.radio-group input[type="radio"] {
+  display: none; /* Hide the default radio button */
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  cursor: pointer; /* Change cursor to pointer when hovering over the label */
+  padding: 5px 10px; /* Add some padding */
+  border: 2px solid transparent; /* Transparent border by default */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 20px; /* Smaller font size for radio button labels */
+  font-weight: bold;
+  margin-top: 5px; /* Space between radio button and label */
+}
+
+.radio-group label:before {
+  content: '';
+  display: inline-block;
+  width: 20px; /* Width of custom radio button */
+  height: 20px; /* Height of custom radio button */
+  margin-right: 10px; /* Space between custom radio button and label text */
+  border: 2px solid peachpuff; /* Border color for custom radio button */
+  border-radius: 5px; /* Rounded corners for custom radio button */
+  background-color: royalblue; /* Background color for custom radio button */
+}
+
+.radio-group input[type="radio"]:checked + label:before {
+  background-color: peachpuff; /* Background color when radio is selected */
+}
+
+.radio-group label:hover {
+  border-color: peachpuff; /* Border color on hover */
+}
+
+.checkbox-buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px; /* Space between checkbox groups */
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+  border: 2px solid transparent; /* Transparent border by default */
+  border-radius: 5px; /* Rounded corners */
+}
+
+.checkbox-group input[type="checkbox"] {
+  accent-color: peachpuff; /* Change the checkbox color */
+  margin-right: 5px;
+}
+
+.checkbox-group input[type="checkbox"]:checked + label {
+  color: peachpuff; /* Change label color when checked */
+}
+
+.checkbox-group:hover, .checkbox-group input[type="checkbox"]:checked {
+  border-color: peachpuff; /* Change border color to peach on hover or when checked */
+}
+
+.checkbox-group label {
+  font-size: 20px; /* Smaller font size for checkbox labels */
+  font-weight: bold;
+  margin-top: 5px; /* Space between checkbox and label */
+}
+
+.carousel-form-item > label {
+  font-size: 30px; 
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: peachpuff;
+  padding-bottom: 50px;
+  margin-right: 5px; /* Space between label and radio button */
+}
+
+.carousel-form-item input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.carousel-controls {
+  display: flex;
+  justify-content:center;
+  margin: 10px 0;
+}
+
+.peachpuff-link {
+  color: peachpuff; 
+  text-decoration: none; /* Optional: removes underline from links */
+  font-weight:300;
+
+}
+
+.peachpuff-link:hover {
+  color: peachpuff; /* Optional: changes color on hover */
+  font-weight: bold;
+  text-decoration: underline; /* Optional: underline on hover */
+}
+
+button {
+  background-color: peachpuff;
+  color: royalblue;
+  font-weight: bold;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+button:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+  color: peachpuff;
+
+}
+
+.submit-button {
+  width: 100%;
+  font-size: 20px;
+  padding: 15px;
+}

@@ -9,6 +9,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
+from imblearn.over_sampling import RandomOverSampler
+from model import BinaryClassifier
 
 # Fill milestone cols with a billion
 # Normalize appropriate cols
@@ -51,9 +53,14 @@ def splitDataset(df):
     y = df['labels']
 
     X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    ros = RandomOverSampler(random_state=42)
+    X_train_resampled, y_train_resampled = ros.fit_resample(X_train, y_train)
+
     X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
 
-    return X_train, y_train, X_val, y_val, X_test, y_test
+    return X_train_resampled, y_train_resampled, X_val, y_val, X_test, y_test
+    # return X_train, y_train, X_val, y_val, X_test, y_test
 
 # this is all scikit learn
 # train model using .fit function
@@ -146,32 +153,6 @@ def hyperparameter_tuning(train_loader, val_loader, learning_rates, batch_sizes,
 # use pytorch to set up the model
 # appending the right number of nodes for each layer
 
-class BinaryClassifier(nn.Module):
-    def __init__(self, input_size, hidden_layers, output_size=1):
-        super(BinaryClassifier, self).__init__()
-        layers = []
-
-        # Input layer
-        layers.append(nn.Linear(input_size, hidden_layers[0]))
-        layers.append(nn.ReLU())
-
-        # Hidden layers
-        for i in range(1, len(hidden_layers)):
-            layers.append(nn.Linear(hidden_layers[i - 1], hidden_layers[i]))
-            layers.append(nn.ReLU())
-
-        # Output layer
-        layers.append(nn.Linear(hidden_layers[-1], output_size))
-        layers.append(nn.Sigmoid())
-
-        self.layers = nn.Sequential(*layers)
-
-    # forward pass is just passing the data through the layers
-    # no need to define backward pass because pytorch does it for us
-
-    def forward(self, x):
-        return self.layers(x)
-
 # train the model using trainig data
 # evaluate on validation set
 # return the average test loss and the accuracy, precision, and recall on the test set
@@ -179,7 +160,7 @@ class BinaryClassifier(nn.Module):
 # once we pick the best hyperparams, we train the model again on the training and validation data, and print the validation loss
 # the point of this is to evaluate the model on unseen data as we do gradient decent
 
-def trainNN(model, train_loader, val_loader, criterion, optimizer, num_epochs=10):
+def trainNN(model, train_loader, val_loader, criterion, optimizer, num_epochs=100):
     for epoch in range(num_epochs):
         # Training
         model.train()
@@ -258,11 +239,14 @@ def main():
     train_loader, val_loader, test_loader = prepare_data_NN(X_train, y_train, X_val, y_val, X_test, y_test, batch_size=32)
 
     input_size = X_train.shape[1]
+    print('input size is', input_size)
+    print('x train columns are', X_train.columns)
     # customize num hidden layers and nodes in them here!!
     learning_rates = [0.1, 0.01, 0.001, 0.0001, .00001]
     batch_sizes = [16, 32]
     hidden_layer_configs = [[5], [64], [5, 4], [64, 32], [5, 4, 3], [64, 32, 16]]
-    best_lr, best_batch_size, best_hidden_layers = hyperparameter_tuning(train_loader, val_loader, learning_rates, batch_sizes, hidden_layer_configs, input_size)
+    # best_lr, best_batch_size, best_hidden_layers = hyperparameter_tuning(train_loader, val_loader, learning_rates, batch_sizes, hidden_layer_configs, input_size)
+    best_lr, best_batch_size, best_hidden_layers = .1, 32, [5,4]
     print('best lr,', best_lr, 'best batch', best_batch_size, 'best hidden', best_hidden_layers)
 
     train_loader, val_loader, test_loader = prepare_data_NN(X_train, y_train, X_val, y_val, X_test, y_test, best_batch_size)
@@ -271,8 +255,11 @@ def main():
     criterion = nn.BCELoss()
     optimizer = optim.Adam(customNN.parameters(), best_lr)
 
-    trainNN(customNN, train_loader, val_loader, criterion, optimizer, num_epochs=10)
+    trainNN(customNN, train_loader, val_loader, criterion, optimizer, num_epochs=100)
     eval_loss = evalNN(customNN, test_loader, criterion)
+
+    model_path = 'startup_predictor.pt'
+    torch.save(customNN.state_dict(), model_path)
 
 if __name__ == '__main__':
     main()
