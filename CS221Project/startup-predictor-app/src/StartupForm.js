@@ -289,17 +289,17 @@ const StartupForm = () => {
                 <p style={{ marginBottom: '50px' }}>extended from work in CS221 at Stanford University.</p>
             
                 <p style={{ marginBottom: '10px' }}>
-                    <a className="peachpuff-link" href="link-to-your-paper.pdf" target="_blank" rel="noopener noreferrer"> paper </a> | 
+                    <a className="peachpuff-link" href="https://docs.google.com/document/d/1uq-6tsF-ae2oElJvrMVzB2EFo5LI0sHGhWPaSr4gEfc/edit?usp=sharing" target="_blank" rel="noopener noreferrer"> paper </a> | 
                     <a className="peachpuff-link" href="https://www.youtube.com/watch?v=kkI3YXysFrc" target="_blank" rel="noopener noreferrer"> video explanation </a> | 
                     <a className="peachpuff-link" href="https://github.com/ninaboord/startup-predictor" target="_blank" rel="noopener noreferrer"> github </a> | 
                     <a className="peachpuff-link" href="https://www.kaggle.com/datasets/manishkc06/startup-success-prediction/data" target="_blank" rel="noopener noreferrer"> dataset </a>
                 </p>
             
                 <p style={{ marginBottom: '20px' }}>authors: 
-                    <a className="peachpuff-link" href="#" onClick={(e) => e.preventDefault()}> Michael Brockman</a>, 
-                    <a className="peachpuff-link" href="#" onClick={(e) => e.preventDefault()}> Hamed Hekmat</a>, 
-                    <a className="peachpuff-link" href="#" onClick={(e) => e.preventDefault()}> Nina Boord</a>, 
-                    <a className="peachpuff-link" href="#" onClick={(e) => e.preventDefault()}> Iris Fu</a>
+                    <a className="peachpuff-link" href="https://www.linkedin.com/in/michael-brockman-15b5b916a/" onClick={(e) => e.preventDefault()}> Michael Brockman</a>, 
+                    <a className="peachpuff-link" href="https://www.linkedin.com/in/hamed-hekmat/" onClick={(e) => e.preventDefault()}> Hamed Hekmat</a>, 
+                    <a className="peachpuff-link" href="https://www.linkedin.com/in/nina-boord/" onClick={(e) => e.preventDefault()}> Nina Boord</a>, 
+                    <a className="peachpuff-link" href="https://www.linkedin.com/in/iristfu/" onClick={(e) => e.preventDefault()}> Iris Fu</a>
                 </p>
             
                 <p style={{ marginBottom: '20px' }}>for fun, not business advice!</p>
