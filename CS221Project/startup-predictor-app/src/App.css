@@ -55,6 +55,7 @@
   flex-direction: column;
   justify-content: center; /* Center content vertically */
   align-items: center; /* Center content horizontally */
+  min-height: 100vh; /* Adjust as needed */
   background-color: royalblue;
   padding: 20px;
   color: peachpuff;
@@ -191,9 +192,7 @@ main {
   font-size: 20px; /* Smaller font size for checkbox labels */
   font-weight: bold;
   margin-top: 5px; /* Space between checkbox and label */
-  white-space: nowrap; /* Prevents the text from wrapping */
-  overflow: hidden; /* Hides text that doesn't fit in the allotted space */
-  max-width: 100%; /* Adjust based on your layout */
+  
 }
 
 .carousel-form-item > label {
