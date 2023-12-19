@@ -579,6 +579,7 @@ const StartupForm = () => {
                             <label>How old was the company when you hit your first milestone?</label>
                             <input type="number" min="0" step="1" name="age_first_milestone_year" value={formData.age_first_milestone_year} onChange={handleChange} onKeyDown={handleKeyDown}/>
                             <p>For example, when you launched your first product or secured a patent.</p>
+                            <p>(in years)</p>
 
                         </div>
                     </Carousel.Item>

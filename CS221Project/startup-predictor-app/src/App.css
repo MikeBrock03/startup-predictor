@@ -13,6 +13,12 @@
   }
 }
 
+@media (max-width: 600px) { /* Adjust the max-width as per your requirements */
+  .checkbox-buttons-container {
+    flex-direction: column; /* Stack them vertically on smaller screens */
+  }
+}
+
 .App-header {
   background-color: royalblue;
   min-height: 5vh; /* Reduced from 100vh to 20vh */
@@ -49,7 +55,6 @@
   flex-direction: column;
   justify-content: center; /* Center content vertically */
   align-items: center; /* Center content horizontally */
-  height: 100vh; /* Set the height to the full viewport height */
   background-color: royalblue;
   padding: 20px;
   color: peachpuff;
@@ -158,6 +163,7 @@ main {
   gap: 10px; /* Space between checkbox groups */
 }
 
+
 .checkbox-group {
   display: flex;
   flex-direction: column;
@@ -185,6 +191,9 @@ main {
   font-size: 20px; /* Smaller font size for checkbox labels */
   font-weight: bold;
   margin-top: 5px; /* Space between checkbox and label */
+  white-space: nowrap; /* Prevents the text from wrapping */
+  overflow: hidden; /* Hides text that doesn't fit in the allotted space */
+  max-width: 100%; /* Adjust based on your layout */
 }
 
 .carousel-form-item > label {
