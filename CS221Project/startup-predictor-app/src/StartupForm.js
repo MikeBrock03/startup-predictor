@@ -296,10 +296,10 @@ const StartupForm = () => {
                 </p>
             
                 <p style={{ marginBottom: '20px' }}>authors: 
-                    <a className="peachpuff-link" href="https://www.linkedin.com/in/michael-brockman-15b5b916a/" onClick={(e) => e.preventDefault()}> Michael Brockman</a>, 
-                    <a className="peachpuff-link" href="https://www.linkedin.com/in/hamed-hekmat/" onClick={(e) => e.preventDefault()}> Hamed Hekmat</a>, 
-                    <a className="peachpuff-link" href="https://www.linkedin.com/in/nina-boord/" onClick={(e) => e.preventDefault()}> Nina Boord</a>, 
-                    <a className="peachpuff-link" href="https://www.linkedin.com/in/iristfu/" onClick={(e) => e.preventDefault()}> Iris Fu</a>
+                    <a className="peachpuff-link" href="https://www.linkedin.com/in/michael-brockman-15b5b916a/" target="_blank" rel="noopener noreferrer"> Michael Brockman</a>, 
+                    <a className="peachpuff-link" href="https://www.linkedin.com/in/hamed-hekmat/" target="_blank" rel="noopener noreferrer"> Hamed Hekmat</a>, 
+                    <a className="peachpuff-link" href="https://www.linkedin.com/in/nina-boord/" target="_blank" rel="noopener noreferrer"> Nina Boord</a>, 
+                    <a className="peachpuff-link" href="https://www.linkedin.com/in/iristfu/" target="_blank" rel="noopener noreferrer"> Iris Fu</a>
                 </p>
             
                 <p style={{ marginBottom: '20px' }}>for fun, not business advice!</p>
