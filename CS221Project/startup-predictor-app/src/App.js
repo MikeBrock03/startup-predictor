@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import StartupForm from './StartupForm';
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       </header>
       <main>
         <StartupForm/>
+        <Analytics/>
       </main>
     </div>
   );
