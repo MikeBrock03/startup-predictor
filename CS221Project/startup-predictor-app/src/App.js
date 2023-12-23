@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import StartupForm from './StartupForm';
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from '@vercel/analytics';
 
 function App() {
   return (
