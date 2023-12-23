@@ -212,7 +212,7 @@ const StartupForm = () => {
         console.log('processed form data is', processedFormData);
 
         try {
-            const response = await fetch('http://localhost:8000/predict/', {
+            const response = await fetch('https://startup-predictor-810e3a7fc484.herokuapp.com', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
