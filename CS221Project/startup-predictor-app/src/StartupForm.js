@@ -18,13 +18,13 @@ const StartupForm = () => {
         founded_at: '2015-12-15', // openai birthday awh
         first_funding_at: '', 
         last_funding_at: '', 
-        age_first_funding_year: 0,
-        age_last_funding_year: 0,
-        age_first_milestone_year: 0,
-        age_last_milestone_year:0,
-        funding_rounds: 0,
-        funding_total_usd: 0,
-        milestones: 0,
+        age_first_funding_year: '',
+        age_last_funding_year: '',
+        age_first_milestone_year: '',
+        age_last_milestone_year:'',
+        funding_rounds: '',
+        funding_total_usd: '',
+        milestones: '',
         is_CA: false,
         is_NY: false,
         is_MA: false,
@@ -46,7 +46,7 @@ const StartupForm = () => {
         has_roundB: false,
         has_roundC: false,
         has_roundD: false,
-        avg_participants: 1,
+        avg_participants: '',
         is_top500: false,
     });
 
@@ -55,7 +55,7 @@ const StartupForm = () => {
     const [hasRaisedFunding, setHasRaisedFunding] = useState(null);
 
     const convertDateToDaysFromMedian = (dateString, dateType) => {
-        if (!dateString) return 0; // handle empty date strings
+        if (!dateString) return ''; // handle empty date strings
         const date = new Date(dateString);
         const medianDate = medianDates[dateType];
         return (date - medianDate) / (1000 * 3600 * 24); // Convert to days
@@ -120,7 +120,7 @@ const StartupForm = () => {
         // Check if the input type is 'number' and convert the value to a number
         if (type === 'number') {
             // Convert number input values to numbers (or default to 0 if empty)
-            newFormData[name] = value ? Number(value) : 0;
+            newFormData[name] = value ? Number(value) : '';
         } else if (type === 'checkbox') {
             // Handle checkbox inputs
             newFormData[name] = checked;
