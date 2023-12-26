@@ -55,7 +55,7 @@ const StartupForm = () => {
     const [hasRaisedFunding, setHasRaisedFunding] = useState(null);
 
     const convertDateToDaysFromMedian = (dateString, dateType) => {
-        if (!dateString) return ''; // handle empty date strings
+        if (!dateString) return 0; // handle empty date strings
         const date = new Date(dateString);
         const medianDate = medianDates[dateType];
         return (date - medianDate) / (1000 * 3600 * 24); // Convert to days
@@ -200,13 +200,14 @@ const StartupForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent the default form submission
         console.log('form data is', formData);
-        console.log('ok we about to submit')
+        console.log('ok we about to submit');
 
         const processedFormData = {
             ...formData,
             founded_at: convertDateToDaysFromMedian(formData.founded_at, 'founded_at'),
             first_funding_at: convertDateToDaysFromMedian(formData.first_funding_at, 'first_funding_at'),
             last_funding_at: convertDateToDaysFromMedian(formData.last_funding_at, 'last_funding_at'),
+            funding_rounds: formData.funding_rounds === '' ? 0 : formData.funding_rounds,
             // Process other date fields similarly
         };
 
