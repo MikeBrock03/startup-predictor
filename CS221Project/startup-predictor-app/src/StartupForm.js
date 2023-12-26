@@ -200,6 +200,7 @@ const StartupForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent the default form submission
         console.log('form data is', formData);
+        console.log('ok we about to submit')
 
         const processedFormData = {
             ...formData,
@@ -212,13 +213,16 @@ const StartupForm = () => {
         console.log('processed form data is', processedFormData);
 
         try {
-            const response = await fetch('https://startup-predictor-810e3a7fc484.herokuapp.com', {
+            console.log('ok we ab to get da response');
+            const response = await fetch('https://startup-predictor-810e3a7fc484.herokuapp.com/predict/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(processedFormData),
             });
+            console.log('response is', response);
+
     
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
